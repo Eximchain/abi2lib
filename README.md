@@ -8,11 +8,11 @@ The config JSON includes the path to the desired smart contract ABI JSON, as wel
 
 ```json
 {
-  "contract": "<PathToYourContract>.json", //contract path
-  "eth": {                                      //Eth configuration
-    "provider": "http://localhost:8545",        //Smart contract will interact with the provider via web3
-    "default_gas": 0,                           //default gas
-    "default_gasPrice": 40                      //default gas price
+  "contract": "<PathToYourContract>.json", 
+  "eth": {                                      
+    "provider": "http://localhost:8545",       
+    "default_gas": 0,                      
+    "default_gasPrice": 40            
   }
 }
 ```
