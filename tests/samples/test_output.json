@@ -1,0 +1,371 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Whitelist",
+        "description": "Whitelist",
+        "version": "1.0.0",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "tags": [
+        {
+            "name": "admins",
+            "description": "Only admin access"
+        },
+        {
+            "name": "addAddressScope",
+            "description": "Dynamic Scope for addAddress"
+        },
+        {
+            "name": "whitelistAddressScope",
+            "description": "Dynamic Scope for whitelistAddress"
+        },
+        {
+            "name": "ownerScope",
+            "description": "Dynamic Scope for owner"
+        },
+        {
+            "name": "userAddrScope",
+            "description": "Dynamic Scope for userAddr"
+        }
+    ],
+    "paths": {
+        "/addAddress": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "addAddress_post_params",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/addAddress_post_params"
+                        }
+                    }
+                ],
+                "operationId": "post_addAddress",
+                "tags": [
+                    "addAddressScope"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/addAddress_post_params_response"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/whitelistAddress": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "whitelistAddress_post_params",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/whitelistAddress_post_params"
+                        }
+                    }
+                ],
+                "operationId": "post_whitelistAddress",
+                "tags": [
+                    "whitelistAddressScope"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/whitelistAddress_post_params_response"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/owner": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "owner_post_params",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/owner_post_params"
+                        }
+                    }
+                ],
+                "operationId": "post_owner",
+                "tags": [
+                    "ownerScope"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/owner_post_params_response"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            },
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "owner_get_params",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/owner_get_params"
+                        }
+                    }
+                ],
+                "operationId": "get_owner",
+                "tags": [
+                    "ownerScope"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/owner_get_params_response"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/userAddr": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "userAddr_post_params",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userAddr_post_params"
+                        }
+                    }
+                ],
+                "operationId": "post_userAddr",
+                "tags": [
+                    "userAddrScope"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/userAddr_post_params_response"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            },
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "userAddr_get_params",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/userAddr_get_params"
+                        }
+                    }
+                ],
+                "operationId": "get_userAddr",
+                "tags": [
+                    "userAddrScope"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/userAddr_get_params_response"
+                        }
+                    },
+                    "400": {
+                        "description": "Error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "address": {
+            "type": "string"
+        },
+        "receipt": {
+            "type": "object",
+            "properties": {
+                "hash": {
+                    "type": "string"
+                }
+            }
+        },
+        "addAddress_post_params": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "$ref": "#/definitions/address"
+                },
+                "from": {
+                    "$ref": "#/definitions/address"
+                }
+            }
+        },
+        "addAddress_post_params_response": {
+            "type": "object",
+            "properties": {
+                "receipt": {
+                    "$ref": "#/definitions/receipt"
+                }
+            }
+        },
+        "whitelistAddress_post_params": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "$ref": "#/definitions/address"
+                },
+                "from": {
+                    "$ref": "#/definitions/address"
+                },
+                "value": {
+                    "type": "number"
+                }
+            }
+        },
+        "whitelistAddress_post_params_response": {
+            "type": "object",
+            "properties": {
+                "receipt": {
+                    "$ref": "#/definitions/receipt"
+                }
+            }
+        },
+        "owner_post_params": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/address"
+                },
+                "from": {
+                    "$ref": "#/definitions/address"
+                }
+            }
+        },
+        "owner_post_params_response": {
+            "type": "object",
+            "properties": {
+                "receipt": {
+                    "$ref": "#/definitions/receipt"
+                }
+            }
+        },
+        "owner_get_params": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/address"
+                }
+            }
+        },
+        "owner_get_params_response": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/address"
+                }
+            }
+        },
+        "userAddr_post_params": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/address"
+                },
+                "from": {
+                    "$ref": "#/definitions/address"
+                }
+            }
+        },
+        "userAddr_post_params_response": {
+            "type": "object",
+            "properties": {
+                "receipt": {
+                    "$ref": "#/definitions/receipt"
+                }
+            }
+        },
+        "userAddr_get_params": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/address"
+                }
+            }
+        },
+        "userAddr_get_params_response": {
+            "type": "object",
+            "properties": {
+                "bool": {
+                    "type": "boolean"
+                }
+            }
+        }
+    },
+    "schemes": [
+        "https"
+    ],
+    "host": "localhost:8080",
+    "basePath": "/"
+}

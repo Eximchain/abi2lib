@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "schemes": ["https"],
+  "host": "localhost:8080",
+  "basePath": "/",
+  "contract": "./tests/samples/test_contract.json",
+  "tags": [
+    {
+      "name": "admins",
+      "description": "Only admin access"
+    }
+  ],
+  "api": {
+    "methodName": {
+      "post": {
+        "tags": [ "admins" ]
+      }
+    }
+  },
+  "eth": {
+    "provider": "http://localhost:8545",
+    "default_gas": 0,
+    "default_gasPrice": 40
+  }
+}
