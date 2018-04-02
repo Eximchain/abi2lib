@@ -25,9 +25,10 @@ import Controller from '<path_to_connector_output>/eth_connector/Controller.js';
 const ContractController = new Controller();
 
 // Perform transaction using config values & required inputs
-ContractController.post_<name of contract fxn>(fromAddr, ...contractInputs)
+ContractController.post_<name of contract fxn>(fromAddr, [value if allowed], ...contractInputs)
 
-// 
+// Query output of contract using required inputs, does not perform transaction
+ContractController.get_<name of contract fxn>(fromAddr, ...contractInputs)
 ```
 
 ## Output Structure
