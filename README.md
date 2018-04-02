@@ -42,7 +42,7 @@ Outputs a directory named `contract_lib` which contains:
 
 ## Connector Methods
 
-The Controller class will have methods corresponding to each of the function/event descriptions listed in the ABI.  If the function can be called with inputs, then there will be a method shaped like:
+The Controller class will have methods corresponding to each of the function descriptions listed in the ABI.  If the function can be called with inputs, then there will be a method shaped like:
 
 ```javascript
 post_<fxnName>(from, [value if fxn is payable], [fxnParams...]){
