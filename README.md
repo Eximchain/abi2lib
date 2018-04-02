@@ -25,20 +25,20 @@ import Controller from '<path_to_connector_output>/eth_connector/Controller.js';
 const ContractController = new Controller();
 
 // Perform transaction using config values & required inputs
-ContractController.post_<name of contract fxn>(fromAddr, [value if allowed], ...contractInputs)
+ContractController.post_<name of contract fxn>(fromAddr, [value if allowed], ...contractInputs);
 
 // Query output of contract using required inputs, does not perform transaction
-ContractController.get_<name of contract fxn>(fromAddr, ...contractInputs)
+ContractController.get_<name of contract fxn>(fromAddr, ...contractInputs);
 ```
 
 ## Output Structure
 
-Outputs a directory named `eth_connector` which contains:
+Outputs a directory named `contract_lib` which contains:
 
-1. GenericEthConnector.js : Generically converts ethereum read/write calls into web3 calls.
-2. Controller.js : Contains all generated methods corresponding to the contract.
-3. Contract.json : A copy of your chosen smart contract ABI JSON
-4. Config.json : A copy of your chosen config JSON
+1. `GenericEthConnector.js` : Generically converts ethereum read/write calls into web3 calls.
+2. `Controller.js` : Contains all generated methods corresponding to the contract.
+3. `Contract.json` : A copy of your chosen smart contract ABI JSON
+4. `Config.json` : A copy of your chosen config JSON
 
 ## Connector Methods
 

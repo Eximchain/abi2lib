@@ -49,15 +49,14 @@ class ETHConnectorGenerator {
      * */
     build(folder_path){
         try{
-            fs.mkdirSync(folder_path+"/eth_connector");
+            fs.mkdirSync(folder_path+"/contract_lib");
         }catch(e){
             //pass
         }
-        fs.writeFileSync(folder_path+"/eth_connector/Controller.js", this.controller_class_code);
-        fs.writeFileSync(folder_path+"/eth_connector/GenericETHConnector.js", fs.readFileSync("./GenericETHConnector.js"));
-        fs.writeFileSync(folder_path+"/eth_connector/contract.json", JSON.stringify(this.cs, undefined, 4));
-        fs.writeFileSync(folder_path+"/eth_connector/config.json", JSON.stringify(this.config, undefined, 4));
-
+        fs.writeFileSync(folder_path+"/contract_lib/Controller.js", this.controller_class_code);
+        fs.writeFileSync(folder_path+"/contract_lib/GenericETHConnector.js", fs.readFileSync("./GenericETHConnector.js"));
+        fs.writeFileSync(folder_path+"/contract_lib/contract.json", JSON.stringify(this.cs, undefined, 4));
+        fs.writeFileSync(folder_path+"/contract_lib/config.json", JSON.stringify(this.config, undefined, 4));
     }
 
 }
