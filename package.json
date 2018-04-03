@@ -1,14 +1,14 @@
 {
-  "name": "eth-smartcontract-connector-generator",
-  "version": "1.0.0",
-  "description": "Generates Server and client code based on given configuration file, contract build file(which contains abi) and output path",
-  "main": "N/A",
+  "name": "abi2lib",
+  "version": "0.0.1",
+  "description": "Ingests a smart contract's ABI and autogenerate boilerplate code for making web3 calls.",
+  "main": "index.js",
   "scripts": {
     "test": "mocha ./tests/**.spec.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/john-osullivan/eximchain-eth-contract-codegen.git"
+    "url": "git+https://github.com/john-osullivan/abi2lib.git"
   },
   "keywords": [
     "eximchain",
@@ -22,9 +22,9 @@
   "author": "Rohit R. Abbadi & John O'Sullivan",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/john-osullivan/eximchain-eth-contract-codegen/issues"
+    "url": "https://github.com/john-osullivan/abi2lib/issues"
   },
-  "homepage": "https://github.com/john-osullivan/eximchain-eth-contract-codegen#readme",
+  "homepage": "https://github.com/john-osullivan/abi2lib#readme",
   "dependencies": {
     "handlebars": "^4.0.11"
   },
