@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "description": "Ingests a smart contract's ABI and autogenerate boilerplate code for making web3 calls.",
   "main": "index.js",
+  "bin" : "index.js",
   "scripts": {
     "test": "mocha ./tests/**.spec.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/john-osullivan/abi2lib.git"
+    "url": "git+https://github.com/Eximchain/abi2lib.git"
   },
   "keywords": [
     "eximchain",
@@ -22,9 +23,9 @@
   "author": "Rohit R. Abbadi & John O'Sullivan",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/john-osullivan/abi2lib/issues"
+    "url": "https://github.com/Eximchain/abi2lib/issues"
   },
-  "homepage": "https://github.com/john-osullivan/abi2lib#readme",
+  "homepage": "https://github.com/Eximchain/abi2lib#readme",
   "dependencies": {
     "handlebars": "^4.0.11"
   },
