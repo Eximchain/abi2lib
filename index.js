@@ -1,4 +1,7 @@
+#!/usr/bin/env node
+
 let fs = require("fs");
+let path = require("path");
 let Handlebars = require("Handlebars");
 
 
@@ -16,7 +19,9 @@ class ETHConnectorGenerator {
     constructor(config_file) {
         "use strict";
         this.config = JSON.parse(fs.readFileSync(config_file));
-        this.cs = JSON.parse(fs.readFileSync((this.config.contract)));    //cs = contract_schema
+        let config_path = path.dirname(config_file);
+        let contract_path = path.resolve(config_path, this.config.contract);
+        this.cs = JSON.parse(fs.readFileSync(contract_path));    //cs = contract_schema
     }
 
     /**
