@@ -1,4 +1,7 @@
 # abi2lib
+
+**WARNING: This library is a work in progress, not yet fully functional.**
+
 An easy way to autogenerate boilerplate code for calling [web3.js](https://github.com/ethereum/web3.js/) so your app can communicate with Ethereum.  
 
 ## Installation

@@ -30,11 +30,11 @@ class Connector{
      * */
     constructor(contract_path){
         "use strict";
-        try{
+        try {
             let data = fs.readFileSync(contract_path);
             let contract_schema = JSON.parse(data);
             this.contract = new web3.eth.Contract(contract_schema.abi, conf.ethereum.whitelist_contract.contract_address);
-        }catch (err) {
+        } catch (err) {
             this.contract =null;
             console.log(err);
         }
