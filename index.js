@@ -2,74 +2,47 @@
 
 let fs = require("fs");
 let path = require("path");
-let Handlebars = require("Handlebars");
+const program = require('commander');
+const package = JSON.parse(fs.readFileSync(path.resolve(__dirname, './package.json')));
 
+const ETHConnectorGenerator = require('./ETHConnectorGenerator');
 
-/**
- * @class
- * @classdesc Parser class that actually parses and generates OpenAPI config
- * */
-class ETHConnectorGenerator {
-
-    /**
-     * @constructor
-     * @description
-     * Read's the contract schema which is built using truffle migrate and stores the schema.
-     * */
-    constructor(config_file) {
-        "use strict";
-        this.config = JSON.parse(fs.readFileSync(config_file));
-        let config_path = path.dirname(config_file);
-        let contract_path = path.resolve(config_path, this.config.contract);
-        this.cs = JSON.parse(fs.readFileSync(contract_path));    //cs = contract_schema
-    }
-
-    /**
-     * @function
-     * @instance
-     * @description handle's reading the data loaded from file and creating objects
-     * */
-    process() {
-        let controller_template = String(fs.readFileSync("./ETHController_template.hbs"));
-        Handlebars.registerHelper({
-            ifEquals(param1, param2, options){
-                return param1 === param2 ? options.fn(this) : options.inverse(this);
-            },
-            logconsole(){
-                let args = Array.prototype.slice.call(arguments);
-                console.log(args.splice(args.length -1 ));
+program
+    .version(package.version)
+    .name(package.name)
+    .description(package.description)
+    .usage('<contract_path> <output_folder> [options]')
+    .option('-C, --config <config>', 'Specify path to config.json from current working directory.  If other options are also specified, they will override values in file.')
+    .option('-P, --provider <provider>', 'Set the Web3 provider; defaults to localhost:8545.')
+    .option('-p, --price <price>', 'Set default gas price, must be int; defaults to 40.', parseInt)
+    .option('-g, --gas <gas>', 'Specify default gas, must be int; defaults to 0.', parseInt)
+    .action((contract_path, output_folder, option) => {
+        let config = {
+            eth : {
+                provider : 'localhost:8545',
+                default_gas : 0,
+                default_gasPrice : 40
             }
-        });
-
-        this.controller_class_code = Handlebars.compile(controller_template)({
-            abi: this.cs.abi
-        })
-    }
-
-    /**
-     * @function
-     * @instance
-     * @param {String} folder_path - path of output folder
-     * @description Writes the serialized json data to provided file path. Else writes the output to console...
-     * */
-    build(folder_path){
-        try{
-            fs.mkdirSync(folder_path+"/contract_lib");
-        }catch(e){
-            //pass
+        };
+        if (option.price === NaN){
+            throw new Error(`Provided price needs to be an integer, but was ${option.price}`)
         }
-        fs.writeFileSync(folder_path+"/contract_lib/Controller.js", this.controller_class_code);
-        fs.writeFileSync(folder_path+"/contract_lib/GenericETHConnector.js", fs.readFileSync("./GenericETHConnector.js"));
-        fs.writeFileSync(folder_path+"/contract_lib/contract.json", JSON.stringify(this.cs, undefined, 4));
-        fs.writeFileSync(folder_path+"/contract_lib/config.json", JSON.stringify(this.config, undefined, 4));
-    }
+        if (option.config) config = JSON.parse(fs.readFileSync(option.config));
+        if (option.provider) config.eth.provider = option.provider;
+        if (option.gas) config.eth.default_gas = option.gas;
+        if (option.price) config.eth.default_gasPrice = option.price;
+        ETHConnectorGenerator.generate(contract_path, output_folder);
+    })
 
-}
+program.on('--help', () => {
+    console.log('');
+    console.log('  Call with a path to your configuration file and a folder to output your web3 contract lib code into.');
+    console.log('');
+});      
 
 if (require.main === module) {
-    let eth_connector_generator = new ETHConnectorGenerator(process.argv[2]);
-    eth_connector_generator.process();
-    eth_connector_generator.build(process.argv[3]);
+    if (process.argv.length === 2) program.help();
+    program.parse(process.argv);
 } else {
     module.exports = ETHConnectorGenerator;
 }

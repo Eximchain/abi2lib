@@ -4,7 +4,7 @@
   "description": "Ingests a smart contract's ABI and autogenerates boilerplate code for making web3 calls.",
   "main": "index.js",
   "bin": "index.js",
-  "preferGlobal" : true,
+  "preferGlobal": true,
   "scripts": {
     "test": "mocha ./tests/**.spec.js"
   },
@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/Eximchain/abi2lib#readme",
   "dependencies": {
+    "commander": "^2.15.1",
+    "dot-prop": "^4.2.0",
     "handlebars": "^4.0.11",
     "web3": "^1.0.0-beta.33"
   },
