@@ -31,7 +31,7 @@ program
         if (option.provider) config.eth.provider = option.provider;
         if (option.gas) config.eth.default_gas = option.gas;
         if (option.price) config.eth.default_gasPrice = option.price;
-        ETHConnectorGenerator.generate(contract_path, output_folder);
+        ETHConnectorGenerator.generate(contract_path, output_folder, config);
     })
 
 program.on('--help', () => {

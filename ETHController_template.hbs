@@ -16,9 +16,23 @@ class Controller{
         this.connector = new Connector("./contract.json", this.config);
     }
 
-    {{#each abi}}
-    {{#ifEquals type "function"}}
-    {{#if inputs.length}}
+{{#each abi}}
+{{#ifEquals type "function"}}
+{{#if constant }}
+    /**
+    * @function
+    * @instance
+    * @param { address } from - from address
+    {{#each inputs}}
+    * @param { {{type}} } name
+    {{/each}}
+    * @description execute get method without a transaction on {{name}}
+    * @returns { Promise }
+    * */
+    get_{{name}}(from, {{#each inputs}}name{{/each}} ){
+        return this.connector.read("{{name}}", from, [ {{#each inputs}}name{{/each}} ]);
+    }
+{{else}}
     /**
     * @function
     * @instance
@@ -35,26 +49,9 @@ class Controller{
     post_{{name}}(from{{#if payable}}, value{{/if}}, {{#each inputs}}name{{/each}} ){
         return this.connector.write("{{name}}", from, {{#if payable}}value{{else}}null{{/if}}, [ {{#each inputs}}name{{/each}} ]);
     }
-    {{/if}}
-
-    {{#if outputs.length}}
-    /**
-    * @function
-    * @instance
-    * @param { address } from - from address
-    {{#each inputs}}
-    * @param { {{type}} } name
-    {{/each}}
-    * @description execute get method without a transaction on {{name}}
-    * @returns { Promise }
-    * */
-    get_{{name}}(from, {{#each inputs}}name{{/each}} ){
-        return this.connector.read("{{name}}", from, [ {{#each inputs}}name{{/each}} ]);
-    }
-    {{/if}}
-
-        {{/ifEquals}}
-    {{/each}}
+{{/if}}
+{{/ifEquals}}
+{{/each}}
 
 }
 

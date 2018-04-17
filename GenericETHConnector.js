@@ -85,7 +85,9 @@ class Connector{
      * */
     write(method_name, from, value, write_params){
         "use strict";
-        return this.contract.methods[method_name].apply(write_params).send(this._createCallParams(from))
+        return this.contract.methods[method_name]
+            .apply(write_params)
+            .send(this._createCallParams(from))
     }
 
     /**
@@ -100,7 +102,8 @@ class Connector{
      * */
     read(method_name, from, read_params, callback){
         "use strict";
-        return this.contract.methods[method_name].apply(read_params)
+        return this.contract.methods[method_name]
+            .apply(read_params)
             .call({from}, (err, result) => {
                 if(err){
                     this._handleError(err, method_name);

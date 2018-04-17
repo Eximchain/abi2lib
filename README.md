@@ -1,7 +1,5 @@
 # abi2lib
 
-**WARNING: This library is a work in progress, not yet fully functional.**
-
 An easy way to autogenerate boilerplate code for calling [web3.js](https://github.com/ethereum/web3.js/) so your app can communicate with Ethereum.  
 
 ## Installation
@@ -33,7 +31,7 @@ yarn global add abi2lib
 ### CLI
 Use in your terminal of choice by running:
 ```
-abi2lib <path_to_config_json> <connector_output_path>
+abi2lib <path_to_contract_json> <connector_output_path> [options]
 ```
 
 ### Module
@@ -41,7 +39,7 @@ Use in your own nodejs scripts:
 ```
 const abi2lib = require('abi2lib');
 
-abi2lib.generate(config_path, output_folder);
+abi2lib.generate(contract_path, output_folder, config_options);
 ```
 
 ### Output
@@ -61,7 +59,7 @@ ContractController.get_<name of contract fxn>(fromAddr, ...contractInputs);
 
 ## Config
 
-The optional config JSON includes constants for configuring web3 calls.  
+The optional config object includes constants for configuring web3 calls.  
 
 ```json
 {
