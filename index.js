@@ -25,7 +25,10 @@ program
             }
         };
         if (option.price === NaN){
-            throw new Error(`Provided price needs to be an integer, but was ${option.price}`)
+            throw new Error(`Provided default gas price needs to be an integer, but was ${option.price} instead.`)
+        }
+        if (option.gas === NaN){
+            throw new Error(`Provided default gas needs to be an integer, but was ${option.gas} instead.`)
         }
         if (option.config) config = JSON.parse(fs.readFileSync(option.config));
         if (option.provider) config.eth.provider = option.provider;
@@ -36,7 +39,7 @@ program
 
 program.on('--help', () => {
     console.log('');
-    console.log('  Call with a path to your configuration file and a folder to output your web3 contract lib code into.');
+    console.log('  Call with a path to your contract file and a folder to output your web3 contract lib code into.');
     console.log('');
 });      
 
