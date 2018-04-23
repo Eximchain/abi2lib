@@ -2,7 +2,7 @@ const conf = require("./config.json");
 let fs = require("fs");
 const Web3 = require("web3");
 
-const web3 = new Web3(new Web3.providers.HttpProvider(conf.ethereum.provider));
+const web3 = new Web3(new Web3.providers.HttpProvider(conf.eth.provider));
 
 /**
  * @class
@@ -33,7 +33,7 @@ class Connector{
         try {
             let data = fs.readFileSync(contract_path);
             let contract_schema = JSON.parse(data);
-            this.contract = new web3.eth.Contract(contract_schema.abi, conf.ethereum.whitelist_contract.contract_address);
+            this.contract = new web3.eth.Contract(contract_schema.abi, conf.eth.whitelist_contract.contract_address);
         } catch (err) {
             this.contract =null;
             console.log(err);
