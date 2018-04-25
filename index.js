@@ -16,7 +16,7 @@ program
     .option('-P, --provider <provider>', 'Set the Web3 provider; defaults to localhost:8545.')
     .option('-p, --price <price>', 'Set default gas price, must be int; defaults to 40.', parseInt)
     .option('-g, --gas <gas>', 'Specify default gas, must be int; defaults to 0.', parseInt)
-    .action((contract_path, output_folder, option) => {
+    .action((contract_path, output_folder, option={}) => {
         let config = {
             eth : {
                 provider : 'localhost:8545',
