@@ -31,9 +31,9 @@ yarn global add abi2lib
 ### CLI
 Use in your terminal of choice by running:
 ```
-abi2lib <contract_path> <output_folder> [options]
+abi2lib <contract_path> [options]
 ```
-The options let you specify config values directly in the command, or specify a path to a config file.  Run `abi2lib --help` to learn more.
+The options let you specify config values directly in the command, or specify a path to a config file.  If you do not specify an output directory via an option, then it will be created in the working one.  Run `abi2lib --help` to learn more.
 
 ### Module
 Use in your own nodejs scripts:

@@ -11,19 +11,18 @@ program
     .version(package.version)
     .name(package.name)
     .description(package.description)
-    .usage('<contract_path> <output_folder> [options]')
+    .usage('<contract_path> [options]')
     .option('-C, --config <config>', 'Specify path to config.json from current working directory.  If other options are also specified, they will override values in file.')
     .option('-P, --provider <provider>', 'Set the Web3 provider; defaults to localhost:8545.')
     .option('-p, --price <price>', 'Set default gas price, must be int; defaults to 40.', parseInt)
     .option('-g, --gas <gas>', 'Specify default gas, must be int; defaults to 0.', parseInt)
+    .option('-o, --output <output>', 'Specify output path relative to current directory; path must exist; defaults to ./')
     .action((contract_path, output_folder, option={}) => {
-        let config = {
-            eth : {
-                provider : 'localhost:8545',
-                default_gas : 0,
-                default_gasPrice : 40
-            }
-        };
+        let config = { eth : {
+            provider : 'localhost:8545',
+            default_gas : 0,
+            default_gasPrice : 40
+        }};
         if (option.price === NaN){
             throw new Error(`Provided default gas price needs to be an integer, but was ${option.price} instead.`)
         }
@@ -34,7 +33,7 @@ program
         if (option.provider) config.eth.provider = option.provider;
         if (option.gas) config.eth.default_gas = option.gas;
         if (option.price) config.eth.default_gasPrice = option.price;
-        ETHConnectorGenerator.generate(contract_path, output_folder, config);
+        ETHConnectorGenerator.generate(contract_path, option.output || './', config);
     })
 
 program.on('--help', () => {

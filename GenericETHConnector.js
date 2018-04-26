@@ -33,7 +33,18 @@ class Connector{
         try {
             let data = fs.readFileSync(contract_path);
             let contract_schema = JSON.parse(data);
-            this.contract = new web3.eth.Contract(contract_schema.abi, conf.eth.whitelist_contract.contract_address);
+            if (!contract_schema.abi || 
+                !contract_schema.contractName ||
+                !contract_schema.networks){
+                throw new Error(`The provided contract JSON is missing the 'abi', 'contractName', 'networks' keys.  Are you sure you're using the build artifact produced by truffle compile?`);
+            }
+            web3.eth.net.getId().then((netId) => {
+                let currentNetwork = contract_schema.networks[netId];
+                if (!currentNetwork){ 
+                    throw new Error(`None of the networks listed in ${contract_schema.contractName} match the current network ID ${netId}, as viewed from web3 provider running at ${conf.eth.provider}.`);
+                }
+                this.contract = new web3.eth.Contract(contract_schema.abi, currentNetwork.address);
+            }).catch(err => throw err);
         } catch (err) {
             this.contract =null;
             console.log(err);
@@ -86,7 +97,7 @@ class Connector{
     write(method_name, from, value, write_params){
         "use strict";
         return this.contract.methods[method_name]
-            .apply(write_params)
+            .apply(this, write_params)
             .send(this._createCallParams(from))
     }
 
@@ -103,7 +114,7 @@ class Connector{
     read(method_name, from, read_params, callback){
         "use strict";
         return this.contract.methods[method_name]
-            .apply(read_params)
+            .apply(this, read_params)
             .call({from}, (err, result) => {
                 if(err){
                     this._handleError(err, method_name);
