@@ -1,11 +1,11 @@
 const path = require("path");
 const fs = require("fs");
 const Web3 = require("web3");
+
+const herePath = aPath => path.resolve(__dirname, aPath)
 const conf = require(herePath("./config.json"));
 const web3 = new Web3(new Web3.providers.HttpProvider(conf.eth.provider));
 const Connector = require(herePath("./GenericETHConnector"));
-
-const herePath = aPath => path.resolve(__dirname, aPath)
 
 /**
 * @class
