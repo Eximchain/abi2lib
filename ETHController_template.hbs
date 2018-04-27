@@ -1,20 +1,37 @@
-let path = require("path");
-let fs = require("fs");
-let Connector = require(path.resolve(__dirname, "./GenericETHConnector"));
+const path = require("path");
+const fs = require("fs");
+const Web3 = require("web3");
+const conf = require(herePath("./config.json"));
+const web3 = new Web3(new Web3.providers.HttpProvider(conf.eth.provider));
+const Connector = require(herePath("./GenericETHConnector"));
+
+const herePath = aPath => path.resolve(__dirname, aPath)
 
 /**
 * @class
 * @classdesc - interface to interact with ETH Connector for all methods
 * */
-class Controller{
+class {{ contractName }}Controller{
 
     /**
     * @constructor
     * @description initializes the connector, which will interact with SmartContract via web3
     * */
     constructor(){
-        this.config = JSON.parse(fs.readFileSync("./config.json"));
-        this.connector = new Connector("./contract.json", this.config);
+        this.config = JSON.parse(fs.readFileSync(herePath("./config.json")));
+    }
+
+    /**
+    * @function
+    * @instance
+    * @description Detects current network and instantiates web3 interface to it.
+    * */
+    connect(){
+        return web3.eth.net.getId().then((netId) => {
+            this.connector = new Connector(herePath("./contract.json"), netId);
+        }).catch(err => {
+            console.log(err)
+        });
     }
 
 {{#each abi}}
@@ -25,13 +42,13 @@ class Controller{
     * @instance
     * @param { address } from - from address
     {{#each inputs}}
-    * @param { {{type}} } name
+    * @param { {{type}} } {{name}}
     {{/each}}
     * @description execute get method without a transaction on {{name}}
     * @returns { Promise }
     * */
-    get_{{name}}(from, {{#each inputs}}name{{/each}} ){
-        return this.connector.read("{{name}}", from, [ {{#each inputs}}name{{/each}} ]);
+    get_{{name}}(from{{#each inputs}}, {{name}}{{/each}}){
+        return this.connector.read("{{name}}", from, [{{{inputList inputs}}}]);
     }
 {{else}}
     /**
@@ -42,13 +59,13 @@ class Controller{
     * @param { Number } value - eth to be sent
     {{/if}}
     {{#each inputs}}
-    * @param { {{type}} } name
+    * @param { {{type}} } {{ name }}
     {{/each}}
     * @description execute post method as a transaction on {{name}}
     * @returns { Promise }
     * */
-    post_{{name}}(from{{#if payable}}, value{{/if}}, {{#each inputs}}name{{/each}} ){
-        return this.connector.write("{{name}}", from, {{#if payable}}value{{else}}null{{/if}}, [ {{#each inputs}}name{{/each}} ]);
+    post_{{name}}(from{{#if payable}}, value{{/if}}{{#each inputs}}, {{ name }}{{/each}}){
+        return this.connector.write("{{name}}", from, {{#if payable}}value{{else}}null{{/if}}, [{{{inputList inputs}}}]);
     }
 {{/if}}
 {{/ifEquals}}
@@ -56,4 +73,4 @@ class Controller{
 
 }
 
-module.exports = Controller;
+module.exports = {{ contractName }}Controller;

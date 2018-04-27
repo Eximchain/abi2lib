@@ -45,11 +45,15 @@ class ETHConnectorGenerator {
             logconsole(){
                 let args = Array.prototype.slice.call(arguments);
                 console.log(args.splice(args.length -1 ));
+            },
+            inputList(inputs){
+                return inputs.map(input => input.name).join(', ');
             }
         });
 
         this.controller_class_code = Handlebars.compile(controller_template)({
-            abi: this.cs.abi
+            abi: this.cs.abi,
+            contractName : this.cs.contractName
         })
     }
 
@@ -60,15 +64,16 @@ class ETHConnectorGenerator {
      * @description Writes the serialized json data to provided file path. Else writes the output to console...
      * */
     build(folder_path){
+        let folderName = path.join(folder_path, `/${this.cs.contractName}ContractLib`);
         try{
-            fs.mkdirSync(folder_path+"/contract_lib");
+            fs.mkdirSync(folderName);
         }catch(e){
             //pass
         }
-        fs.writeFileSync(folder_path+"/contract_lib/Controller.js", this.controller_class_code);
-        fs.writeFileSync(folder_path+"/contract_lib/GenericETHConnector.js", fs.readFileSync(path.resolve(__dirname, "./GenericETHConnector.js")));
-        fs.writeFileSync(folder_path+"/contract_lib/contract.json", JSON.stringify(this.cs, undefined, 4));
-        fs.writeFileSync(folder_path+"/contract_lib/config.json", JSON.stringify(this.config, undefined, 4));
+        fs.writeFileSync(path.join(folderName, "/Controller.js"), this.controller_class_code);
+        fs.writeFileSync(path.join(folderName, "/GenericETHConnector.js"), fs.readFileSync(path.resolve(__dirname, "./GenericETHConnector.js")));
+        fs.writeFileSync(path.join(folderName, "/contract.json"), JSON.stringify(this.cs, undefined, 4));
+        fs.writeFileSync(path.join(folderName, "/config.json"), JSON.stringify(this.config, undefined, 4));
     }
 
     static generate(contract_path, folder_path, config={}){

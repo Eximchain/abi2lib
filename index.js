@@ -17,9 +17,9 @@ program
     .option('-p, --price <price>', 'Set default gas price, must be int; defaults to 40.', parseInt)
     .option('-g, --gas <gas>', 'Specify default gas, must be int; defaults to 0.', parseInt)
     .option('-o, --output <output>', 'Specify output path relative to current directory; path must exist; defaults to ./')
-    .action((contract_path, output_folder, option={}) => {
+    .action((contract_path, option={}) => {
         let config = { eth : {
-            provider : 'localhost:8545',
+            provider : 'http://localhost:8545',
             default_gas : 0,
             default_gasPrice : 40
         }};
