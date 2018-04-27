@@ -24,7 +24,6 @@ class ETHConnectorGenerator {
      * */
     constructor(contract_path, config={}) {
         if (typeof config === 'string'){
-
             this.config = ensureDefaults(JSON.parse(fs.readFileSync(config)));
         } else {
             this.config = ensureDefaults(config);

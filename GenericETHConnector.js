@@ -1,4 +1,4 @@
-const conf = require("./config.json");
+const conf = require(path.resolve(__dirname, "./config.json"));
 let fs = require("fs");
 const Web3 = require("web3");
 
