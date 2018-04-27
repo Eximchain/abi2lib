@@ -33,7 +33,7 @@
       "constant": true,
       "inputs": [
         {
-          "name": "",
+          "name": "address",
           "type": "address"
         }
       ],
@@ -52,7 +52,7 @@
       "constant": true,
       "inputs": [
         {
-          "name": "",
+          "name": "address",
           "type": "address"
         }
       ],

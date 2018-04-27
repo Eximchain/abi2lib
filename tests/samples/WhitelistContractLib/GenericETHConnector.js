@@ -1,6 +1,7 @@
-const conf = require("./config.json");
-let fs = require("fs");
+const path = require('path');
+const fs = require("fs");
 const Web3 = require("web3");
+const conf = require(path.resolve(__dirname, "./config.json"));
 
 const web3 = new Web3(new Web3.providers.HttpProvider(conf.eth.provider));
 
@@ -28,13 +29,22 @@ class Connector{
      * @description
      * Read's the contract schema which is built using truffle migrate and creates a contract instance which can be then interacted with.
      * */
-    constructor(contract_path){
+    constructor(contract_path, netId){
         "use strict";
-        try{
+        try {
             let data = fs.readFileSync(contract_path);
             let contract_schema = JSON.parse(data);
-            this.contract = new web3.eth.Contract(contract_schema.abi, conf.eth.whitelist_contract.contract_address);
-        }catch (err) {
+            if (!contract_schema.abi || 
+                !contract_schema.contractName ||
+                !contract_schema.networks){
+                throw new Error(`The provided contract JSON is missing the 'abi', 'contractName', 'networks' keys.  Are you sure you're using the build artifact produced by truffle compile?`);
+            }
+            let currentNetwork = contract_schema.networks[netId];
+            if (!currentNetwork){ 
+                throw new Error(`None of the networks listed in ${contract_schema.contractName} match the current network ID ${netId}, as viewed from web3 provider running at ${conf.eth.provider}.`);
+            }
+            this.contract = new web3.eth.Contract(contract_schema.abi, currentNetwork.address);
+        } catch (err) {
             this.contract =null;
             console.log(err);
         }
@@ -42,6 +52,7 @@ class Connector{
 
     /**
      * @function
+     * @private
      * @param {Error} err
      * @param {String} method_name
      * @description
@@ -84,7 +95,9 @@ class Connector{
      * */
     write(method_name, from, value, write_params){
         "use strict";
-        return this.contract.methods[method_name].apply(write_params).send(this._createCallParams(from))
+        return this.contract.methods[method_name]
+            .apply(this, write_params)
+            .send(this._createCallParams(from))
     }
 
     /**
@@ -97,9 +110,9 @@ class Connector{
      * calls the smart contract's method, and on successful transaction, will call the callback with a receipt
      * @returns {Promise}
      * */
-    read(method_name, from, read_params, callback){
-        "use strict";
-        return this.contract.methods[method_name].apply(read_params)
+    read(method_name, from, read_params, callback=()=>{}){
+        return this.contract.methods[method_name]
+            .apply(this, read_params)
             .call({from}, (err, result) => {
                 if(err){
                     this._handleError(err, method_name);

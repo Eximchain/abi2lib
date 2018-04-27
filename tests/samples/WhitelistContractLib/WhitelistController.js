@@ -11,7 +11,7 @@ const Connector = require(herePath("./GenericETHConnector"));
 * @class
 * @classdesc - interface to interact with ETH Connector for all methods
 * */
-class {{ contractName }}Controller{
+class WhitelistController{
 
     /**
     * @constructor
@@ -35,43 +35,52 @@ class {{ contractName }}Controller{
         });
     }
 
-{{#each abi}}
-{{#ifEquals type "function"}}
-{{#if constant }}
     /**
     * @function
     * @instance
     * @param { address } from - from address
-    {{#each inputs}}
-    * @param { {{type}} } {{name}}
-    {{/each}}
-    * @description Call {{name}}, does not execute a transaction.
+    * @param { address } user
+    * @description Send transaction to addAddress.
     * @returns { Promise }
     * */
-    get_{{name}}(from{{#each inputs}}, {{name}}{{/each}}){
-        return this.connector.read("{{name}}", from, [{{{inputList inputs}}}]);
+    post_addAddress(from, user){
+        return this.connector.write("addAddress", from, null, [user]);
     }
-{{else}}
     /**
     * @function
     * @instance
     * @param { address } from - from address
-    {{#if payable}}
     * @param { Number } value - eth to be sent
-    {{/if}}
-    {{#each inputs}}
-    * @param { {{type}} } {{ name }}
-    {{/each}}
-    * @description Send transaction to {{name}}{{#if payable}}; real value is spent{{/if}}.
+    * @param { address } user
+    * @description Send transaction to whitelistAddress; real value is spent.
     * @returns { Promise }
     * */
-    post_{{name}}(from{{#if payable}}, value{{/if}}{{#each inputs}}, {{ name }}{{/each}}){
-        return this.connector.write("{{name}}", from, {{#if payable}}value{{else}}null{{/if}}, [{{{inputList inputs}}}]);
+    post_whitelistAddress(from, value, user){
+        return this.connector.write("whitelistAddress", from, value, [user]);
     }
-{{/if}}
-{{/ifEquals}}
-{{/each}}
+    /**
+    * @function
+    * @instance
+    * @param { address } from - from address
+    * @param { address } address
+    * @description Call owner, does not execute a transaction.
+    * @returns { Promise }
+    * */
+    get_owner(from, address){
+        return this.connector.read("owner", from, [address]);
+    }
+    /**
+    * @function
+    * @instance
+    * @param { address } from - from address
+    * @param { address } address
+    * @description Call userAddr, does not execute a transaction.
+    * @returns { Promise }
+    * */
+    get_userAddr(from, address){
+        return this.connector.read("userAddr", from, [address]);
+    }
 
 }
 
-module.exports = {{ contractName }}Controller;
+module.exports = WhitelistController;

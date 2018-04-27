@@ -71,17 +71,27 @@ class ETHConnectorGenerator {
         }catch(e){
             //pass
         }
-        fs.writeFileSync(path.join(folderName, `/${name}Controller.js`), this.controller_class_code);
-        fs.writeFileSync(path.join(folderName, "/GenericETHConnector.js"), fs.readFileSync(path.resolve(__dirname, "./GenericETHConnector.js")));
-        fs.writeFileSync(path.join(folderName, "/contract.json"), JSON.stringify(this.cs, undefined, 4));
-        fs.writeFileSync(path.join(folderName, "/config.json"), JSON.stringify(this.config, undefined, 4));
+        let contractPath = path.join(folderName, "/contract.json");
+        let configPath = path.join(folderName, "/config.json");
+        let controllerPath = path.join(folderName, `/${name}Controller.js`);
+        let connectorPath = path.join(folderName, "/GenericETHConnector.js");
+        fs.writeFileSync(controllerPath, this.controller_class_code);
+        fs.writeFileSync(connectorPath, fs.readFileSync(path.resolve(__dirname, "./GenericETHConnector.js")));
+        fs.writeFileSync(contractPath, JSON.stringify(this.cs, undefined, 4));
+        fs.writeFileSync(configPath, JSON.stringify(this.config, undefined, 4));
+        console.log('');
+        console.log('  ETHConnector generation complete!');
+        console.log('  + ',folderName);
+        [controllerPath, connectorPath, contractPath, configPath].forEach((path)=>{
+            console.log('    + ',path)
+        });
+        console.log('');
     }
 
     static generate(contract_path, folder_path, config={}){
         let generator = new ETHConnectorGenerator(contract_path, config);
         generator.process();
         generator.build(folder_path);
-        console.log('ETHConnector generation complete!');
         return;
     }
 }
