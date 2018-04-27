@@ -64,13 +64,14 @@ class ETHConnectorGenerator {
      * @description Writes the serialized json data to provided file path. Else writes the output to console...
      * */
     build(folder_path){
-        let folderName = path.join(folder_path, `/${this.cs.contractName}ContractLib`);
+        let name = this.cs.contractName;
+        let folderName = path.join(folder_path, `/${name}ContractLib`);
         try{
             fs.mkdirSync(folderName);
         }catch(e){
             //pass
         }
-        fs.writeFileSync(path.join(folderName, "/Controller.js"), this.controller_class_code);
+        fs.writeFileSync(path.join(folderName, `/${name}Controller.js`), this.controller_class_code);
         fs.writeFileSync(path.join(folderName, "/GenericETHConnector.js"), fs.readFileSync(path.resolve(__dirname, "./GenericETHConnector.js")));
         fs.writeFileSync(path.join(folderName, "/contract.json"), JSON.stringify(this.cs, undefined, 4));
         fs.writeFileSync(path.join(folderName, "/config.json"), JSON.stringify(this.config, undefined, 4));
