@@ -96,12 +96,12 @@ get_<fxnName>(from, [inputParams...]){
 
 ## Output Structure
 
-Outputs a directory named `contract_lib` which contains:
+Outputs a directory named `<ContractName>ContractLib` which contains:
 
 1. `GenericEthConnector.js` : Generically converts ethereum read/write calls into web3 calls.
-2. `Controller.js` : Contains all generated methods corresponding to the contract.
-3. `Contract.json` : A copy of your chosen smart contract ABI JSON
-4. `Config.json` : A copy of your chosen config JSON
+2. `<ContractName>Controller.js` : Contains all generated methods corresponding to the contract.
+3. `contract.json` : A copy of your chosen smart contract ABI JSON
+4. `config.json` : A copy of your chosen config JSON
 
 ## Licensing
 `abi2lib` is developed & maintained by [Eximchain](https://eximchain.com/), released for public use under the Apache-2.0 License.  
