@@ -27,12 +27,22 @@ class {{ contractName }}Controller{
     * @description Detects current network and instantiates web3 interface to it.
     * @returns { Promise }
     * */
-    connect(){
+    detectNetwork(){
         return web3.eth.net.getId().then((netId) => {
             this.connector = new Connector(herePath("./contract.json"), netId);
         }).catch(err => {
             console.log(err)
         });
+    }
+
+    /**
+    * @function
+    * @instance
+    * @description Deprecated name for #detectNetwork().
+    * @returns { Promise }
+    * */
+    connect(){
+        return detectNetwork();
     }
 
 {{#each abi}}

@@ -51,8 +51,9 @@ const BaseController = require('<ContractName>ContractLib/<ContractName>Controll
 
 const ContractController = new BaseController();
 
-// Connects controller to the specified provider -- detecting network ID is async, connect must be separate step.
-ContractController.connect();
+// Async method which configures library with network ID of
+// currently active network.
+await ContractController.detectNetwork();
 
 // Perform transaction using config values & required inputs
 ContractController.post_<fxnA>(fromAddr, [value if allowed], ...contractInputs);
