@@ -51,8 +51,8 @@ const BaseController = require('<ContractName>ContractLib/<ContractName>Controll
 
 const ContractController = new BaseController();
 
-// Async method which configures library with network ID of
-// currently active network.
+// Async method, returns Promise; configures library with 
+// network ID of currently active network.
 await ContractController.detectNetwork();
 
 // Perform transaction using config values & required inputs
