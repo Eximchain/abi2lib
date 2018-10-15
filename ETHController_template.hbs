@@ -58,7 +58,7 @@ class {{ contractName }}Controller{
     * @description Call {{name}}, does not execute a transaction.
     * @returns { Promise }
     * */
-    get_{{name}}(from{{#each inputs}}, {{#if name !== ""}}{{name}}{{else}}{{type}}{{/if}}{{/each}}){
+    get_{{name}}(from{{inputSpread inputs}}){
         return this.connector.read("{{name}}", from, [{{{inputList inputs}}}]);
     }
 {{else}}

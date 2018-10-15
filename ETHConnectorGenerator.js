@@ -48,6 +48,10 @@ class ETHConnectorGenerator {
             },
             inputList(inputs){
                 return inputs.map(input => input.name !== "" ? input.name : input.type).join(', ');
+            },
+            inputSpread(inputs){
+                if (inputs.length > 0) return ', '+inputList(inputs);
+                return '';
             }
         });
 
