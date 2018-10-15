@@ -55,7 +55,9 @@ class ETHConnectorGenerator {
                 return '';
             }
         });
-        this.cs.abi = sortBy(this.cs.abi, 'name')
+        const getters = this.cs.abi.filter(elt => elt.constant);
+        const setters = this.cs.abi.filter(elt => !elt.constant);
+        this.cs.abi = sortBy(getters, 'name').concat(sortBy(setters, 'name'));
         this.controller_class_code = Handlebars.compile(controller_template)({
             abi: this.cs.abi,
             contractName : this.cs.contractName
