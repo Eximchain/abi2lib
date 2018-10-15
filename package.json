@@ -1,6 +1,6 @@
 {
   "name": "abi2lib",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "Ingests a smart contract's ABI and autogenerates boilerplate code for making web3 calls.",
   "main": "index.js",
   "bin": "index.js",
@@ -30,7 +30,8 @@
   "dependencies": {
     "commander": "^2.15.1",
     "dot-prop": "^4.2.0",
-    "handlebars": "^4.0.11"
+    "handlebars": "^4.0.11",
+    "lodash.sortby": "^4.7.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",

@@ -1,5 +1,6 @@
 let fs = require("fs");
 let path = require("path");
+let sortBy = require('lodash.sortby');
 let dotProp = require('dot-prop');
 let Handlebars = require("handlebars");
 
@@ -54,7 +55,7 @@ class ETHConnectorGenerator {
                 return '';
             }
         });
-
+        this.cs.abi = sortBy(this.cs.abi, 'name')
         this.controller_class_code = Handlebars.compile(controller_template)({
             abi: this.cs.abi,
             contractName : this.cs.contractName
