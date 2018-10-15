@@ -38,7 +38,6 @@ class ETHConnectorGenerator {
      * */
     process() {
         let controller_template = String(fs.readFileSync(path.resolve(__dirname, "./ETHController_template.hbs")));
-        const inputList = (inputs) => { inputs.map(input => input.name !== "" ? input.name : input.type).join(', ') }
         Handlebars.registerHelper({
             ifEquals(param1, param2, options){
                 return param1 === param2 ? options.fn(this) : options.inverse(this);
@@ -48,10 +47,10 @@ class ETHConnectorGenerator {
                 console.log(args.splice(args.length -1 ));
             },
             inputList(inputs){
-                return inputList(inputs);
+                return inputs.map(input => input.name !== "" ? input.name : input.type).join(', ');
             },
             inputSpread(inputs){
-                if (inputs.length > 0) return ', '+inputList(inputs);
+                if (inputs.length > 0) return ', '+inputs.map(input => input.name !== "" ? input.name : input.type).join(', ');
                 return '';
             }
         });
