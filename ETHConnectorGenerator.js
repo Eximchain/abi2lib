@@ -47,7 +47,7 @@ class ETHConnectorGenerator {
                 console.log(args.splice(args.length -1 ));
             },
             inputList(inputs){
-                return inputs.map(input => input.name).join(', ');
+                return inputs.map(input => input.name !== "" ? input.name : input.type).join(', ');
             }
         });
 
@@ -64,7 +64,8 @@ class ETHConnectorGenerator {
      * @description Writes the serialized json data to provided file path. Else writes the output to console...
      * */
     build(folder_path){
-        let name = this.cs.contractName;
+        // Different naming conventions in different Solidity versions
+        let name = this.cs.contractName || this.cs.contract_name;
         let folderName = path.join(folder_path, `/${name}ContractLib`);
         try{
             fs.mkdirSync(folderName);
